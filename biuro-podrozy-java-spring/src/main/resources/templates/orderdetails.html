@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Wyszukiwarka</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="/nav.html"></div>
+<div class="container">
+    <div class="card mb-3 shadow p-3 mb-3 bg-body rounded">
+        <div class="card-body">
+            <h5 class="card-title"
+                th:text="${order.travel.hotel.city.country.name} + ' - ' + ${order.travel.hotel.city.name}"></h5>
+            <p class="card-text" th:text="'Hotel: ' + ${order.travel.hotel.name}"></p>
+            <p class="card-text"
+               th:text="'Wylot: ' + ${order.travel.departureDate} + ' - ' + ${order.travel.airport.name}"></p>
+            <p class="card-text" th:text="'Powrót: ' + ${order.travel.arrivalDate}"></p>
+            <p class="card-text" th:text="'Ilość dni: ' + ${order.travel.numberOfDays}"></p>
+            <p class="card-text" th:text="'Opcja: ' + ${order.travel.type}"></p>
+            <p class="card-text" th:if="${order.numberOfAdults > 0}"
+               th:text="'Ilość dorosłych: ' + ${order.numberOfAdults}"></p>
+            <p class="card-text" th:if="${order.numberOfChildren > 0}"
+               th:text="'Ilość dzieci: ' + ${order.numberOfChildren}"></p>
+            <p class="card-text" th:text="'Opis hotelu: ' + ${order.travel.hotel.description}"></p>
+            <p class="card-text" th:text="'Cena całkowita: ' + ${order.totalPrice}"></p>
+        </div>
+    </div>
+
+    <form th:object="${order}" method="post" th:action="@{'/order/summary'}">
+        <input type="hidden" th:field="*{travel.id}">
+        <input type="hidden" th:field="*{user.id}">
+        <input type="hidden" th:field="*{numberOfAdults}">
+        <input type="hidden" th:field="*{numberOfChildren}">
+        <input type="hidden" th:field="*{totalPrice}">
+        <button type="submit" class="btn btn-primary">Kup i zapłać</button>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Wyszukiwarka</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="/nav.html"></div>
+<div class="container">
+
+    <br>
+
+    <form th:object="${searchCriteria}" method="post" th:action="@{'/search'}">
+        <div class="mb-3">
+            <select th:field="*{continentId}" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                <option th:each="continent:${continents}"
+                        th:value="${continent.id}"
+                        th:text="${continent.name}"></option>
+            </select>
+        </div>
+        <br>
+        <select th:field="*{countryId}" class="form-select form-select-sm" aria-label=".form-select-sm example">
+            <option th:value="${null}">Wybierz kraj</option>
+            <option th:each="country:${countries}"
+                    th:value="${country.id}"
+                    th:text="${country.name}"></option>
+        </select>
+        <br>
+        <button type="submit" class="btn btn-primary">Szukaj</button>
+    </form>
+
+
+    <div th:replace="/posts.html"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+</body>
+</html>

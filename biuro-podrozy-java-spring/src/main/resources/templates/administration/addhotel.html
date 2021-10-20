@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Administracja-Hotel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="/nav.html"></div>
+<div class="container">
+
+    <form th:object="${hotel}" method="post" th:action="@{'/add/hotel'}" class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label for="hotel">Nazwa Hotelu</label>
+            <input type="text" id="hotel" th:field="*{name}" class="form-control" required>
+            <div class="invalid-feedback">
+                Proszę podać nazwę hotelu.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="standard">Standard</label>
+            <select id="standard" th:field="*{standard}" class="form-select form-select-sm"
+                    aria-label=".form-select-sm example">
+                <option th:value="${1}">1</option>
+                <option th:value="${2}">2</option>
+                <option th:value="${3}">3</option>
+                <option th:value="${4}">4</option>
+                <option th:value="${5}">5</option>
+            </select>
+
+        </div>
+
+        <div class="mb-3">
+            <label for="description">Opis</label>
+            <input type="text" id="description" th:field="*{description}" class="form-control" required>
+            <div class="invalid-feedback">
+                Proszę podać opis hotelu.
+            </div>
+        </div>
+
+        <div class=" mb-3">
+            <label for="city">Miasto</label>
+            <select id="city" th:field="*{city}" class="form-select form-select-sm"
+                    aria-label=".form-select-sm example" required>
+                <option th:value="${null}">Wybierz miasto</option>
+                <option th:each="city:${cities}"
+                        th:value="${city.id}"
+                        th:text="${city.name}"></option>
+            </select>
+            <div class="invalid-feedback">
+                Proszę wybrać miasto.
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Dodaj</button>
+    </form>
+</div>
+<script type="text/javascript" th:src="@{../validation.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+</body>
+</html>

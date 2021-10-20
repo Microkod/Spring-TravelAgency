@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Administracja-Miasto</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="/nav.html"></div>
+<div class="container">
+
+
+  <form th:object="${city}" method="post" th:action="@{'/add/city'}" class="needs-validation" novalidate>
+    <div class="mb-3">
+      <label for="city">Nazwa Miasta</label>
+      <input type="text" id="city" th:field="*{name}" class="form-control" required>
+      <div class="invalid-feedback">
+        Proszę podać nazwę miasta.
+      </div>
+    </div>
+
+    <div class="mb-3">
+
+      <label for="country">Kraj</label>
+      <select id="country" th:field="*{country}" class="form-select form-select-sm"
+              aria-label=".form-select-sm example" required>
+        <option th:value="${null}">Wybierz kraj</option>
+        <option th:each="country:${countries}"
+                th:value="${country.id}"
+                th:text="${country.name}"></option>
+      </select>
+      <div class="invalid-feedback">
+        Proszę wybrać kraj.
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Dodaj</button>
+  </form>
+</div>
+<script type="text/javascript" th:src="@{../validation.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+</body>
+</html>

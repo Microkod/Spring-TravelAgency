@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Administracja-Wycieczka</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="/nav.html"></div>
+<div class="container">
+
+
+    <form th:object="${travel}" method="post" th:action="@{'/add/travel'}" class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label for="departureDate">Data wyjazdu</label>
+            <input type="date" id="departureDate" th:field="*{departureDate}" class="form-select form-select-sm"
+                   aria-label=".form-select-sm example" required>
+            <div class="invalid-feedback">
+                Proszę podać datę wyjazdu.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="arrivalDate">Data powrotu</label>
+            <input type="date" id="arrivalDate" th:field="*{arrivalDate}" class="form-select form-select-sm"
+                   aria-label=".form-select-sm example" required>
+            <div class="invalid-feedback">
+                Proszę podać datę powrotu.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <select th:field="*{type}" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                <option th:each="_type:${types}"
+                        th:value="${_type.name}"
+                        th:text="${_type.name}"></option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="priceAdult">Cena za dorosłego</label>
+            <input type="number" min="0" id="priceAdult" th:field="*{priceAdult}" class="form-control" required>
+            <div class="invalid-feedback">
+                Podaj cenę > 0
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="priceChild">Cena za dziecko</label>
+            <input type="number" min="0" id="priceChild" th:field="*{priceChild}" class="form-control" required>
+            <div class="invalid-feedback">
+                Podaj cenę > 0
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="numberOfAdults">Maksymalna liczba dorosłych</label>
+            <input type="number" min="0" max="10" id="numberOfAdults" th:field="*{numberOfAdults}" class="form-control"
+                   required>
+            <div class="invalid-feedback">
+                Liczba dorosłych z zakresu 0 - 10
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="numberOfChildren">Maksymalna liczba dzieci</label>
+            <input type="number" min="0" max="10" id="numberOfChildren" th:field="*{numberOfChildren}"
+                   class="form-control" required>
+            <div class="invalid-feedback">
+                Liczba dzieci z zakresu 0 - 10
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="promoted">Promowana</label>
+            <input type="checkbox" id="promoted" th:field="*{promoted}" class="form-check-input"
+                   aria-label=".form-select-sm example">
+        </div>
+
+        <div class="mb-3">
+            <label for="airport">Lotnisko</label>
+            <select id="airport" th:field="*{airport}" class="form-select form-select-sm"
+                    aria-label=".form-select-sm example" required>
+                <option th:value="${null}">Wybierz lotnisko</option>
+                <option th:each="airport:${airports}"
+                        th:value="${airport.id}"
+                        th:text="${airport.name}"></option>
+            </select>
+            <div class="invalid-feedback">
+                Proszę wybrać lotnisko.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="hotel">Hotel</label>
+            <select id="hotel" th:field="*{hotel}" class="form-select form-select-sm"
+                    aria-label=".form-select-sm example" required>
+                <option th:value="${null}">Wybierz hotel</option>
+                <option th:each="hotel:${hotels}"
+                        th:value="${hotel.id}"
+                        th:text="${hotel.city.country.name} + ' - ' + ${hotel.city.name} + ' - ' + ${hotel.name}"></option>
+            </select>
+            <div class="invalid-feedback">
+                Proszę wybrać hotel.
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Dodaj</button>
+    </form>
+</div>
+<script type="text/javascript" th:src="@{../validation.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Wyszukiwarka</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+</head>
+<body>
+
+<div th:replace="/nav.html"></div>
+
+<div class="container">
+    <div class="card mb-3 shadow p-3 mb-3 bg-body rounded">
+        <div class="card-body">
+            <h5 class="card-title"
+                th:text="${travel.hotel.city.country.name} + ' - ' + ${travel.hotel.city.name}"></h5>
+            <p class="card-text" th:text="'Hotel: ' + ${travel.hotel.name}"></p>
+            <p class="card-text" th:text="'Wylot: ' + ${travel.departureDate} + ' - ' + ${travel.airport.name}"></p>
+            <p class="card-text" th:text="'Powrót: ' + ${travel.arrivalDate}"></p>
+            <p class="card-text" th:text="'Ilość dni: ' + ${travel.numberOfDays}"></p>
+            <p class="card-text" th:text="'Opcja: ' + ${travel.type}"></p>
+            <p class="card-text"
+               th:text="'Ilość dorosłych / cena - ' + ${travel.numberOfAdults} + ' / ' + ${travel.priceAdult} + 'zł'"></p>
+            <p class="card-text"
+               th:text="'Ilość dzieci / cena - ' + ${travel.numberOfChildren} + ' / ' + ${travel.priceChild} + 'zł'"></p>
+            <p class="card-text" th:text="'Opis hotelu: ' + ${travel.hotel.description}"></p>
+            <form th:object="${order}" method="post" th:action="@{'/order'}">
+                <div class="mb-3">
+                    <label for="numberOfAdults">Liczba dorosłych</label>
+                    <select id="numberOfAdults" th:field="*{numberOfAdults}" class="form-select form-select-sm"
+                            aria-label=".form-select-sm example">
+                        <option th:each="idx: ${#numbers.sequence(0, travel.numberOfAdults)}"
+                                th:value="${idx}"
+                                th:text="${idx}"></option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="numberOfChildren">Liczba dzieci</label>
+                    <select id="numberOfChildren" th:field="*{numberOfChildren}" class="form-select form-select-sm"
+                            aria-label=".form-select-sm example">
+                        <option th:each="idx: ${#numbers.sequence(0, travel.numberOfChildren)}"
+                                th:value="${idx}"
+                                th:text="${idx}"></option>
+                    </select>
+                </div>
+                <div>
+                    <input type="hidden" th:field="*{travel.id}">
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Przejdź do podsumowania</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

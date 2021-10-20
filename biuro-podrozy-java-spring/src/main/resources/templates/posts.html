@@ -1,0 +1,27 @@
+<div class="card mb-3 shadow p-3 mb-3 bg-body rounded" th:each="travel:${travels}">
+    <div class="card-body">
+        <h5 class="card-title"
+            th:text="${travel.hotel.city.country.name} + ' - ' + ${travel.hotel.city.name}"></h5>
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <p class="card-text" th:text="'Hotel: ' + ${travel.hotel.name}"></p>
+                <p class="card-text" th:text="'Wylot: ' + ${travel.departureDate} + ' - ' + ${travel.airport.name}"></p>
+                <p class="card-text" th:text="'Powrót: ' + ${travel.arrivalDate}"></p>
+                <p class="card-text" th:text="'Ilość dni: ' + ${travel.numberOfDays}"></p>
+            </div>
+            <div class="col-sm-6">
+                <p class="card-text" th:text="'Opcja: ' + ${travel.type}"></p>
+                <p class="card-text"
+                   th:text="'Ilość dorosłych / cena - ' + ${travel.numberOfAdults} + ' / ' + ${travel.priceAdult} + 'zł'"></p>
+                <p class="card-text"
+                   th:text="'Ilość dzieci / cena - ' + ${travel.numberOfChildren} + ' / ' + ${travel.priceChild} + 'zł'"></p>
+                <p class="card-text" th:text="'Opis hotelu: ' + ${travel.hotel.description}"></p>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <a th:href="@{'/order?travelId=' + ${travel.id}}" class="btn btn-primary">Wybierz wycieczke</a>
+        </div>
+    </div>
+</div>
+
+
